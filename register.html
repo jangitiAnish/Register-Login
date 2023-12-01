@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<body>
+    <nav style="background-color: black;">
+        <div class="container">
+          <div class="logo">
+            <h1>logo</h1>
+          </div>
+          <div class="info">
+            <a href="">Home</a>
+            <a href="">About</a>
+            <a href="">Contact</a>
+            <a href="">Help</a>
+          </div>
+          <div class="btn">
+            <button id="loginBtn">Sign In</button>
+          </div>
+        </div>
+    </nav>
+    <div class="container2" id="SignInPopUp">
+        <h1>Sign In</h1>
+        <form id="loginform">
+            <div class="input">
+                <i class='bx bxs-user-circle'></i>
+                <input type="email" id="loginEmail" placeholder="enter email">
+            </div>
+            <div class="input">
+                <i class='bx bx-low-vision' ></i>
+                <input type="password" id="loginPassword" placeholder="enter password">
+            </div>
+            <button type="submit">Login</button>
+            <p>Click on Register if you dont have account<a href="#" id="registerLink">  Register</a></p>
+        </form>
+    </div>
+    <div class="popup" id="registerPopup" style="display: none;">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <div class="input">
+                <input type="text" id="firstname" placeholder="First Name">
+            </div>
+            <div class="input">
+                <input type="text" id="lastname" placeholder="Last Name">
+            </div>
+            <div class="input">
+            <input type="email" id="email" placeholder="enter email">
+        </div>
+        <div class="input">
+            <input type="password" id="password" placeholder="enter password">
+        </div>
+          <button type="submit" id="signUpBtn"s>Sign Up</button>
+        </form>
+      </div>
+    </html>
+</body>
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        const SignInPopUp = document.getElementById('SignInPopUp');
+        const registerPopup = document.getElementById('registerPopup');
+        const registerLink = document.getElementById('registerLink');
+        const signUpBtn = document.getElementById('signUpBtn');
+        function saveFormData () {
+          const firstname = document.getElementById('firstname').value;
+          const lastname = document.getElementById('lastname').value;
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const userDetails = {firstname, lastname, email, password};
+          console.log(userDetails)
+          localStorage.setItem('userDetails', JSON.stringify(userDetails));
+        }
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          saveFormData();
+          alert('Registration successful!');
+        });
+        document.getElementById('loginform').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const loginEmail = document.getElementById('loginEmail').value;
+          console.log(loginEmail)
+          const loginPassword = document.getElementById('loginPassword').value;
+          console.log(loginPassword)
+          const storedUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+          if (loginEmail === storedUserDetails.email && loginPassword === storedUserDetails.password) {
+            alert('Login successful!');
+            document.getElementById('loginEmail').value = "";
+            document.getElementById('loginPassword').value = "";
+          } else {
+            alert('Login failed. Invalid email or password.');
+          }
+        });  
+        signUpBtn.addEventListener('click', () => {
+        registerPopup.style.display = 'none';
+        SignInPopUp.style.display = 'block';
+      });
+
+       registerLink.addEventListener('click', () => {
+         SignInPopUp.style.display = 'none';
+         registerPopup.style.display = 'block';
+      });
+        
+        loginBtn.addEventListener('click', () => {
+            SignInPopUp.style.display = 'block';
+        });
+    </script>
+<style>
+  body {
+    width: 98%;
+    height: 100vh;
+    background-color: #f6f6f2;
+  }
+  .container {
+    display: flex;
+    /* justify-content: space-between; */
+  }
+  .container .logo h1 {
+    justify-content: flex-start;
+    margin-top: 0px;
+    color: white;
+  }
+  .container .info {
+   margin-left: 170px;
+   margin-top: 10px;
+  }
+  .container .info a {
+   margin-left: 25px;
+   color: white;
+   margin-bottom: 100px;
+  }
+  .container .btn {
+    margin-left: 30%;
+  }
+  .container .btn button{
+    margin-left: 150px;
+    margin-top: 10px;
+    font-size: medium;
+    background-color: black;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border-radius: 25px;
+    font-family: cursive;
+    /* background: transparent; */
+    border: none;
+  }
+  .container .btn button:hover {
+    background-color: gray;
+    cursor: pointer;
+    transition: 1s;
+    border-radius: 5px;
+  }
+  .container2 {
+     display: block;
+      position: fixed;
+      top: 50%;
+      left: 80%;
+      width: 30%;
+      height: 50%;
+      transform: translate(-50%, -50%);
+      background: transparent;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+  }
+  .container2 h1 {
+   color: black;
+   /* margin-left: 30%;
+   margin-top: 40px; */
+   font-style: italic;
+   text-align: center;
+  }
+  .container2 .input {
+    margin: 30px;
+   display: flex;
+   height: 30px;
+  }
+  .container2 .input i {
+    position: absolute;
+    margin-top: 15px;
+    padding-left: 73%;
+  }
+  .container2 .input input {
+    /* color: red; */
+    border-radius: 15px;
+    background: transparent;
+    width: 100%;
+    height: 35px;
+    padding-left: 10px;
+    border: none;
+    border-bottom: 3px solid;
+    outline: none;
+  }
+  .container2 button {
+   margin-left: 70%;
+   background: transparent;
+   padding: 10px 20px;
+   border-radius: 25px;
+   border: none;
+   cursor: pointer;
+  }
+  .container2 button:hover{
+    transition: 1s;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+  }
+  .container2 p a:hover {
+    color: white;
+    transition: 1s;
+  }
+  .popup {
+    display: none;
+      position: fixed;
+      top: 50%;
+      left: 80%;
+      width: 30%;
+      height: 50%;
+      transform: translate(-50%, -50%);
+      background: transparent;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    .popup h2 {
+     color:black;
+     font-style: italic;
+     /* margin-left: 30%;
+     margin-top: 40px; */
+     text-align: center;
+    }
+  .popup .input {
+    margin: 30px;
+   display: flex;
+   height: 30px;
+  }
+  .popup .input input {
+    /* color: red; */
+    border-radius: 15px;
+    background: transparent;
+    width: 100%;
+    height: 35px;
+    padding-left: 10px;
+    border: none;
+    border-bottom: 3px solid;
+    outline: none;
+  }
+  .popup button {
+   margin-left: 70%;
+   padding: 10px 20px;
+   border-radius: 10px;
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+  }
+  .popup button:hover{
+    transition: 2s;
+    background-color: black;
+    color: white;
+  }
+</style>
